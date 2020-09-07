@@ -1,0 +1,69 @@
+version: '3.3'
+networks:
+  app-tier:
+    driver: bridge
+volumes:
+  redis_data:
+    driver: local
+services:
+  # api: 
+  #   container_name: "pharma_backend"
+  #   image: "node:10.18.0"
+  #   # user: "node"
+  #   expose:
+  #     - 3000
+  #   networks:
+  #     - app-tier
+  #   depends_on:
+  #     # - redis
+  #     - mariadb
+  #   working_dir: /home/node/app
+  #   volumes:
+  #     - ./:/home/node/app
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - 3100:3000
+  #   command: "npm run start:dev"
+  redis:
+    container_name: pharma_redis
+    image: 'bitnami/redis:latest'
+    volumes:
+      - redis_data:/bitnami/redis/data
+    env_file:
+      - .env
+    ports:
+      - 6379:6379
+    networks:
+      - app-tier
+  mariadb:
+    container_name: "pharma_db"
+    image: mariadb
+    restart: always
+    working_dir: /home/
+    networks:
+      - app-tier
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_SERVER_PASSWORD}
+      MYSQL_DATABASE: ${DB_SERVER_NAME}
+      MYSQL_USER: ${DB_SERVER_USERNAME}
+      MYSQL_PASSWORD: ${DB_SERVER_PASSWORD}
+    volumes:
+      - ./database/:/docker-entrypoint-initdb.d
+      - ./database:/home/
+    ports:
+      - 3306
+      - 3306:3306
+    command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_general_ci']
+  adminer:
+    container_name: "pharma_db_adminer"
+    image: adminer
+    networks:
+      - app-tier
+    depends_on:
+      - mariadb
+    restart: always
+    ports:
+      - 8082:8080
