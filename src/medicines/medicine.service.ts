@@ -4,7 +4,6 @@ import { GetMedicinesFilterDto } from './dto/get-medicines-filter.dto';
 import { MedicineRepository } from './medicine.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Medicine } from './medicine.entity';
-import { MedicineStatus } from './medicine-status.enum';
 import { User } from '../auth/user.entity';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
 

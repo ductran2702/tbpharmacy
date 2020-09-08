@@ -1,6 +1,6 @@
 export enum UserRole {
-    AUTHORED_USER = 'AUTHORED_USER',
-    ADMIN = 'ADMIN'
+    AUTHORED_USER,
+    ADMIN
 }
 
 export enum MedicineStatus {

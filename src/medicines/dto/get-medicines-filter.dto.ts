@@ -1,6 +1,6 @@
-import { MedicineStatus } from '../medicine-status.enum';
 import { IsOptional, IsIn, IsNotEmpty, Max, Min, IsInt } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { MedicineStatus } from 'src/common/constants';
 
 export class GetMedicinesFilterDto {
   @IsOptional()

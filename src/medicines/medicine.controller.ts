@@ -6,7 +6,7 @@ import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { GetMedicinesFilterDto } from './dto/get-medicines-filter.dto';
 import { Medicine } from './medicine.entity';
 import { User } from '../auth/user.entity';
-import { GetUser } from '../auth/get-user.decorator';
+import { GetUser } from '../auth/decorators/get-user.decorator';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
 
