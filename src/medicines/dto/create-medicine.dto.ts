@@ -1,13 +1,12 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateMedicineDto {
   @IsNotEmpty()
-  name: string;
+  @ApiProperty()
+  title: string;
 
   @IsNotEmpty()
+  @ApiProperty()
   description: string;
-
-  @IsNotEmpty()
-  @IsNumber()
-  price: number;
 }

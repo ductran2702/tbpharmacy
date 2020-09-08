@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { MedicineStatus } from './medicine-status.enum';
+import { User } from '../auth/user.entity';
 
 @Entity()
 export class Medicine extends BaseEntity {
@@ -7,14 +8,17 @@ export class Medicine extends BaseEntity {
   id: number;
 
   @Column()
-  name: string;
+  title: string;
 
   @Column()
   description: string;
 
   @Column()
-  price: number;
+  status: MedicineStatus;
+
+  @ManyToOne(type => User, user => user.medicines, { eager: false })
+  user: User;
 
   @Column()
-  status: MedicineStatus;
+  userId: number;
 }
