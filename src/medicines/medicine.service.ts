@@ -17,9 +17,8 @@ export class MedicinesService {
 
   async getMedicines(
     filterDto: GetMedicinesFilterDto,
-    user: User,
   ): Promise<Medicine[]> {
-    return this.medicineRepository.getMedicines(filterDto, user);
+    return this.medicineRepository.getMedicines(filterDto);
   }
 
   async getMedicineById(

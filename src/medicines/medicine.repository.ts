@@ -12,12 +12,11 @@ export class MedicineRepository extends Repository<Medicine> {
 
   async getMedicines(
     filterDto: GetMedicinesFilterDto,
-    user: User,
   ): Promise<Medicine[]> {
-    const { status, search } = filterDto;
-    const query = this.createQueryBuilder('medicine');
-
-    query.where('medicine.userId = :userId', { userId: user.id });
+    const { status, search, page, limit } = filterDto;
+    const query = this.createQueryBuilder('medicine')
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     if (status) {
       query.andWhere('medicine.status = :status', { status });
@@ -31,7 +30,7 @@ export class MedicineRepository extends Repository<Medicine> {
       const medicines = await query.getMany();
       return medicines;
     } catch (error) {
-      this.logger.error(`Failed to get medicines for user "${user.username}". Filters: ${JSON.stringify(filterDto)}`, error.stack);
+      this.logger.error(`Failed to get medicines. Filters: ${JSON.stringify(filterDto)}`, error.stack);
       throw new InternalServerErrorException();
     }
   }

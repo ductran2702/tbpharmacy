@@ -8,7 +8,7 @@ import { Medicine } from './medicine.entity';
 import { MedicineStatus } from './medicine-status.enum';
 import { User } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user.decorator';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
 
 @Controller('medicines')
@@ -20,12 +20,12 @@ export class MedicinesController {
   constructor(private medicinesService: MedicinesService) {}
 
   @Get()
+  @ApiBearerAuth()
   getMedicines(
-    @Query(ValidationPipe) filterDto: GetMedicinesFilterDto,
-    @GetUser() user: User,
+    @Query() filterDto: GetMedicinesFilterDto,
   ): Promise<Medicine[]> {
-    this.logger.verbose(`User "${user.username}" retrieving all medicines. Filters: ${JSON.stringify(filterDto)}`);
-    return this.medicinesService.getMedicines(filterDto, user);
+    //this.logger.verbose(`User "${user.username}" retrieving all medicines. Filters: ${JSON.stringify(filterDto)}`);
+    return this.medicinesService.getMedicines(filterDto)
   }
 
   @Get('/:id')
@@ -37,7 +37,6 @@ export class MedicinesController {
   }
 
   @Post()
-  @UsePipes(ValidationPipe)
   createMedicine(
     @Body() createMedicineDto: CreateMedicineDto,
     @GetUser() user: User,
