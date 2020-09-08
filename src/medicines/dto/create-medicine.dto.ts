@@ -9,4 +9,8 @@ export class CreateMedicineDto {
   @IsNotEmpty()
   @ApiProperty()
   description: string;
+
+  @IsNotEmpty()
+  @ApiProperty()
+  price: number;
 }

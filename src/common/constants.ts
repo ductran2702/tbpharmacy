@@ -6,6 +6,7 @@ export enum UserRole {
 export enum MedicineStatus {
     NEW,
     AVAILABLE,
+    OUTSOON,
     OUT,
   }
   

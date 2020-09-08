@@ -39,11 +39,12 @@ export class MedicineRepository extends Repository<Medicine> {
     createMedicineDto: CreateMedicineDto,
     user: User,
   ): Promise<Medicine> {
-    const { name, description } = createMedicineDto;
+    const { name, description, price } = createMedicineDto;
 
     const medicine = new Medicine();
     medicine.name = name;
     medicine.description = description;
+    medicine.price = price;
     medicine.status = MedicineStatus.NEW;
     medicine.user = user;
 

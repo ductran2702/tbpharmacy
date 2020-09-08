@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, Delete, Patch, Query, UsePipes, ValidationPipe, ParseIntPipe, UseGuards, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Patch, Query, UsePipes, ValidationPipe, ParseIntPipe, UseGuards, Logger, Req, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { MedicinesService } from './medicine.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
@@ -9,10 +9,13 @@ import { User } from '../auth/user.entity';
 import { GetUser } from '../auth/decorators/get-user.decorator';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
+import { RolesGuard } from 'src/common/guards/roles.guard';
+import { UserRole } from 'src/common/constants';
+import { Roles } from '../common/decorator/roles.decorator';
 
 @Controller('medicines')
 @ApiTags('Medicine')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard(), RolesGuard)
 @ApiBearerAuth()
 export class MedicinesController {
   private logger = new Logger('MedicinesController');
@@ -36,15 +39,18 @@ export class MedicinesController {
   }
 
   @Post()
+  @Roles(UserRole.ADMIN)
   createMedicine(
     @Body() createMedicineDto: CreateMedicineDto,
-    @GetUser() user: User,
+    //@GetUser() user: User,
+    @Request() req,
   ): Promise<Medicine> {
-    this.logger.verbose(`User "${user.username}" creating a new medicine. Data: ${JSON.stringify(createMedicineDto)}`);
-    return this.medicinesService.createMedicine(createMedicineDto, user);
+    this.logger.verbose(`User "${req.user.username}" creating a new medicine. Data: ${JSON.stringify(createMedicineDto)}`);
+    return this.medicinesService.createMedicine(createMedicineDto, req.user);
   }
 
   @Delete('/:id')
+  @Roles(UserRole.ADMIN)
   deleteMedicine(
     @Param('id', ParseIntPipe) id: number,
     @GetUser() user: User,
