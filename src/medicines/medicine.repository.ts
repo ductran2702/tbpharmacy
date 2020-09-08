@@ -1,10 +1,10 @@
 import { Medicine } from './medicine.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
-import { MedicineStatus } from './medicine-status.enum';
 import { GetMedicinesFilterDto } from './dto/get-medicines-filter.dto';
 import { User } from '../auth/user.entity';
 import { Logger, InternalServerErrorException } from '@nestjs/common';
+import { MedicineStatus } from 'src/common/constants';
 
 @EntityRepository(Medicine)
 export class MedicineRepository extends Repository<Medicine> {

@@ -1,6 +1,6 @@
 import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { MedicineStatus } from '../medicine-status.enum';
+import { MedicineStatus } from 'src/common/constants';
 
 export class UpdateMedicineDto {
     @ApiProperty({ type: 'enum', enum: MedicineStatus })

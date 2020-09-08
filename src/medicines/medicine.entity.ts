@@ -1,6 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { MedicineStatus } from './medicine-status.enum';
+
 import { User } from '../auth/user.entity';
+import { MedicineStatus } from 'src/common/constants';
 
 @Entity()
 export class Medicine extends BaseEntity {

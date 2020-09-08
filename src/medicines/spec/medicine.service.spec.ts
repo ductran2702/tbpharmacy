@@ -3,8 +3,8 @@ import { Test } from '@nestjs/testing';
 import { MedicinesService } from '../medicine.service';
 import { MedicineRepository } from '../medicine.repository';
 import { GetMedicinesFilterDto } from '../dto/get-medicines-filter.dto';
-import { MedicineStatus } from '../medicine-status.enum';
 import { NotFoundException } from '@nestjs/common';
+import { MedicineStatus } from 'src/common/constants';
 
 const mockUser = { id: 12, username: 'Test user' };
 

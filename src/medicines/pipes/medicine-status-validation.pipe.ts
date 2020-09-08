@@ -1,5 +1,5 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common';
-import { MedicineStatus } from '../medicine-status.enum';
+import { MedicineStatus } from 'src/common/constants';
 
 export class MedicineStatusValidationPipe implements PipeTransform {
   readonly allowedStatuses = [

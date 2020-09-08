@@ -2,10 +2,9 @@ import { Controller, Get, Post, Body, Param, Delete, Patch, Query, UsePipes, Val
 import { AuthGuard } from '@nestjs/passport';
 import { MedicinesService } from './medicine.service';
 import { CreateMedicineDto } from './dto/create-medicine.dto';
-import { MedicineStatusValidationPipe } from './pipes/medicine-status-validation.pipe';
+//import { MedicineStatusValidationPipe } from './pipes/medicine-status-validation.pipe';
 import { GetMedicinesFilterDto } from './dto/get-medicines-filter.dto';
 import { Medicine } from './medicine.entity';
-import { MedicineStatus } from './medicine-status.enum';
 import { User } from '../auth/user.entity';
 import { GetUser } from '../auth/get-user.decorator';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
@@ -14,13 +13,13 @@ import { UpdateMedicineDto } from './dto/update-medicine.dto';
 @Controller('medicines')
 @ApiTags('Medicine')
 @UseGuards(AuthGuard())
+@ApiBearerAuth()
 export class MedicinesController {
   private logger = new Logger('MedicinesController');
 
   constructor(private medicinesService: MedicinesService) {}
 
   @Get()
-  @ApiBearerAuth()
   getMedicines(
     @Query() filterDto: GetMedicinesFilterDto,
   ): Promise<Medicine[]> {
