@@ -6,7 +6,7 @@ export class GetMedicinesFilterDto {
   @IsOptional()
   //@IsIn([MedicineStatus.NEW, MedicineStatus.AVAILABLE, MedicineStatus.OUT])
   @ApiPropertyOptional()
-  status: string;
+  status: MedicineStatus;
 
   @IsOptional()
   @IsNotEmpty()

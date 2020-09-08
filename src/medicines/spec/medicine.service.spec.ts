@@ -36,7 +36,7 @@ describe('MedicinesService', () => {
       medicineRepository.getMedicines.mockResolvedValue('someValue');
 
       expect(medicineRepository.getMedicines).not.toHaveBeenCalled();
-      const filters: GetMedicinesFilterDto = { status: MedicineStatus.AVAILABLE, search: 'Some search query' };
+      const filters: GetMedicinesFilterDto = { status: MedicineStatus.AVAILABLE, search: 'Some search query', page:1, limit:10 };
       const result = await medicinesService.getMedicines(filters, mockUser);
       expect(medicineRepository.getMedicines).toHaveBeenCalled();
       expect(result).toEqual('someValue');
