@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateMedicineDto {
   @IsNotEmpty()
   @ApiProperty()
-  title: string;
+  name: string;
 
   @IsNotEmpty()
   @ApiProperty()

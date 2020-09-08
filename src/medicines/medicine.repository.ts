@@ -24,7 +24,7 @@ export class MedicineRepository extends Repository<Medicine> {
     }
 
     if (search) {
-      query.andWhere('(medicine.title LIKE :search OR medicine.description LIKE :search)', { search: `%${search}%` });
+      query.andWhere('(medicine.name LIKE :search OR medicine.description LIKE :search)', { search: `%${search}%` });
     }
 
     try {
@@ -40,10 +40,10 @@ export class MedicineRepository extends Repository<Medicine> {
     createMedicineDto: CreateMedicineDto,
     user: User,
   ): Promise<Medicine> {
-    const { title, description } = createMedicineDto;
+    const { name, description } = createMedicineDto;
 
     const medicine = new Medicine();
-    medicine.title = title;
+    medicine.name = name;
     medicine.description = description;
     medicine.status = MedicineStatus.NEW;
     medicine.user = user;

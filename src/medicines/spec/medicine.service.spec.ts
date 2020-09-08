@@ -45,7 +45,7 @@ describe('MedicinesService', () => {
 
   describe('getMedicineById', () => {
     it('calls medicineRepository.findOne() and succesffuly retrieve and return the medicine', async () => {
-      const mockMedicine = { title: 'Test medicine', description: 'Test desc' };
+      const mockMedicine = { name: 'Test medicine', description: 'Test desc' };
       medicineRepository.findOne.mockResolvedValue(mockMedicine);
 
       const result = await medicinesService.getMedicineById(1, mockUser);
@@ -70,7 +70,7 @@ describe('MedicinesService', () => {
       medicineRepository.createMedicine.mockResolvedValue('someMedicine');
 
       expect(medicineRepository.createMedicine).not.toHaveBeenCalled();
-      const createMedicineDto = { title: 'Test medicine', description: 'Test desc' };
+      const createMedicineDto = { name: 'Test medicine', description: 'Test desc' };
       const result = await medicinesService.createMedicine(createMedicineDto, mockUser);
       expect(medicineRepository.createMedicine).toHaveBeenCalledWith(createMedicineDto, mockUser);
       expect(result).toEqual('someMedicine');
