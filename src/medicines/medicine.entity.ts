@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 
 import { User } from '../auth/user.entity';
-import { MedicineStatus } from 'src/common/constants';
+import { MedicineStatus } from '../common/constants';
 
 @Entity()
 export class Medicine extends BaseEntity {

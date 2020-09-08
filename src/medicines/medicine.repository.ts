@@ -4,7 +4,7 @@ import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { GetMedicinesFilterDto } from './dto/get-medicines-filter.dto';
 import { User } from '../auth/user.entity';
 import { Logger, InternalServerErrorException } from '@nestjs/common';
-import { MedicineStatus } from 'src/common/constants';
+import { MedicineStatus } from '../common/constants';
 
 @EntityRepository(Medicine)
 export class MedicineRepository extends Repository<Medicine> {

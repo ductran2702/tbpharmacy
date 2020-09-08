@@ -4,7 +4,7 @@ import { MedicinesService } from '../medicine.service';
 import { MedicineRepository } from '../medicine.repository';
 import { GetMedicinesFilterDto } from '../dto/get-medicines-filter.dto';
 import { NotFoundException } from '@nestjs/common';
-import { MedicineStatus } from 'src/common/constants';
+import { MedicineStatus } from '../../common/constants';
 
 const mockUser = { id: 12, username: 'Test user' };
 

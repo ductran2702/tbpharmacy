@@ -3,7 +3,7 @@ import { ConflictException, InternalServerErrorException } from '@nestjs/common'
 import * as bcrypt from 'bcryptjs';
 import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
-import { UserRole } from 'src/common/constants';
+import { UserRole } from '../common/constants';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {

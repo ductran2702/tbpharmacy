@@ -3,6 +3,7 @@ import { UserRepository } from '../user.repository';
 import { ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { User } from '../user.entity';
 import * as bcrypt from 'bcryptjs';
+import { UserRole } from '../../common/constants';
 
 const mockCredentialsDto = { username: 'TestUsername', password: 'TestPassword' };
 
@@ -50,6 +51,7 @@ describe('UserRepository', () => {
       userRepository.findOne = jest.fn();
       user = new User();
       user.username = 'TestUsername';
+      user.role = UserRole.AUTHORED_USER;
       user.validatePassword = jest.fn();
     });
 
@@ -58,7 +60,7 @@ describe('UserRepository', () => {
       user.validatePassword.mockResolvedValue(true);
 
       const result = await userRepository.validateUserPassword(mockCredentialsDto);
-      expect(result).toEqual('TestUsername');
+      expect(result).toEqual({ username: 'TestUsername', role: UserRole.AUTHORED_USER });
     });
 
     it('returns null as user cannot be found', async () => {

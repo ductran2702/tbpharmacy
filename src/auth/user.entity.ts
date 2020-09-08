@@ -1,7 +1,7 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Unique, OneToMany, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Medicine } from '../medicines/medicine.entity';
-import { UserRole } from 'src/common/constants';
+import { UserRole } from '../common/constants';
 
 @Entity()
 @Unique(['username'])
