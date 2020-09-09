@@ -12,7 +12,7 @@ export class UserSeed {
     
     private readonly logger = new Logger(UserSeed.name);
 
-    @Command({ command: 'seed:admin <email>', describe: 'Seed a admin', autoExit: true })
+    @Command({ command: 'seed:admin <username>', describe: 'Seed a admin', autoExit: true })
     async createAdmin(
         @Positional({
             name: 'username',
