@@ -6,7 +6,6 @@ import { CreateMedicineDto } from './dto/create-medicine.dto';
 import { GetMedicinesFilterDto } from './dto/get-medicines-filter.dto';
 import { Medicine } from './medicine.entity';
 import { User } from '../auth/user.entity';
-import { GetUser } from '../auth/decorators/get-user.decorator';
 import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
 import { RolesGuard } from 'src/common/guards/roles.guard';
@@ -26,7 +25,7 @@ export class MedicinesController {
   getMedicines(
     @Query() filterDto: GetMedicinesFilterDto,
   ): Promise<Medicine[]> {
-    //this.logger.verbose(`User "${user.username}" retrieving all medicines. Filters: ${JSON.stringify(filterDto)}`);
+    this.logger.verbose(`Retrieving all medicines. Filters: ${JSON.stringify(filterDto)}`);
     return this.medicinesService.getMedicines(filterDto)
   }
 
@@ -41,7 +40,6 @@ export class MedicinesController {
   @Roles(UserRole.ADMIN)
   createMedicine(
     @Body() createMedicineDto: CreateMedicineDto,
-    //@GetUser() user: User,
     @Request() req,
   ): Promise<Medicine> {
     this.logger.verbose(`User "${req.user.username}" creating a new medicine. Data: ${JSON.stringify(createMedicineDto)}`);
@@ -54,6 +52,7 @@ export class MedicinesController {
     @Param('id', ParseIntPipe) id: number,
     @Request() req,
   ): Promise<void> {
+    this.logger.verbose(`User "${req.user.username}" deleting a medicine id: ${id}`);
     return this.medicinesService.deleteMedicine(id, req.user);
   }
 
@@ -63,7 +62,6 @@ export class MedicinesController {
     //@Body('status', MedicineStatusValidationPipe) status: MedicineStatus,
     @Body() dto: UpdateMedicineDto,
   ): Promise<Medicine> {
-    console.log('updateMedicineStatus id=',id);
     return this.medicinesService.updateMedicineStatus(id, dto);
   }
 }
