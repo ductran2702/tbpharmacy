@@ -33,9 +33,8 @@ export class MedicinesController {
   @Get('/:id')
   getMedicineById(
     @Param('id', ParseIntPipe) id: number,
-    @GetUser() user: User,
   ): Promise<Medicine> {
-    return this.medicinesService.getMedicineById(id, user);
+    return this.medicinesService.getMedicineById(id);
   }
 
   @Post()
@@ -53,9 +52,9 @@ export class MedicinesController {
   @Roles(UserRole.ADMIN)
   deleteMedicine(
     @Param('id', ParseIntPipe) id: number,
-    @GetUser() user: User,
+    @Request() req,
   ): Promise<void> {
-    return this.medicinesService.deleteMedicine(id, user);
+    return this.medicinesService.deleteMedicine(id, req.user);
   }
 
   @Patch('/:id/status')
@@ -63,8 +62,8 @@ export class MedicinesController {
     @Param('id', ParseIntPipe) id: number,
     //@Body('status', MedicineStatusValidationPipe) status: MedicineStatus,
     @Body() dto: UpdateMedicineDto,
-    @GetUser() user: User,
   ): Promise<Medicine> {
-    return this.medicinesService.updateMedicineStatus(id, dto, user);
+    console.log('updateMedicineStatus id=',id);
+    return this.medicinesService.updateMedicineStatus(id, dto);
   }
 }

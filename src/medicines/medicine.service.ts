@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Medicine } from './medicine.entity';
 import { User } from '../auth/user.entity';
 import { UpdateMedicineDto } from './dto/update-medicine.dto';
+import { AdvancedConsoleLogger } from 'typeorm';
 
 @Injectable()
 export class MedicinesService {
@@ -22,10 +23,8 @@ export class MedicinesService {
 
   async getMedicineById(
     id: number,
-    user: User,
   ): Promise<Medicine> {
-    const found = await this.medicineRepository.findOne({ where: { id, userId: user.id } });
-
+    const found = await this.medicineRepository.findOne({ where: { id } });
     if (!found) {
       throw new NotFoundException(`Medicine with ID "${id}" not found`);
     }
@@ -47,16 +46,15 @@ export class MedicinesService {
     const result = await this.medicineRepository.delete({ id, userId: user.id });
 
     if (result.affected === 0) {
-      throw new NotFoundException(`Medicine with ID "${id}" not found`);
+      throw new NotFoundException(`Medicine with ID "${id}" not found or you cannot delete this medicine (only owner can delete it)`);
     }
   }
 
   async updateMedicineStatus(
     id: number,
     dto: UpdateMedicineDto,
-    user: User,
   ): Promise<Medicine> {
-    const medicine = await this.getMedicineById(id, user);
+    const medicine = await this.getMedicineById(id);
     medicine.status = dto.status;
     await medicine.save();
     return medicine;

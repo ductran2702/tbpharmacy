@@ -48,13 +48,12 @@ describe('MedicinesService', () => {
       const mockMedicine = { name: 'Test medicine', description: 'Test desc' };
       medicineRepository.findOne.mockResolvedValue(mockMedicine);
 
-      const result = await medicinesService.getMedicineById(1, mockUser);
+      const result = await medicinesService.getMedicineById(1);
       expect(result).toEqual(mockMedicine);
 
       expect(medicineRepository.findOne).toHaveBeenCalledWith({
         where: {
           id: 1,
-          userId: mockUser.id,
         },
       });
     });
