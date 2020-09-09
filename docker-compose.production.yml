@@ -1,48 +1,50 @@
 version: '3.3'
 networks:
-  app-tier:
+  app-tier-prod:
     driver: bridge
-volumes:
-  redis_data:
-    driver: local
+# volumes:
+#   redis_data_prod:
+#     driver: local
 services:
-  # api: 
-  #   container_name: "pharma_backend"
-  #   image: "node:10.18.0"
-  #   # user: "node"
-  #   expose:
-  #     - 3000
-  #   networks:
-  #     - app-tier
-  #   depends_on:
-  #     # - redis
-  #     - mariadb
-  #   working_dir: /home/node/app
-  #   volumes:
-  #     - ./:/home/node/app
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - 3100:3000
-  #   command: "npm run start:dev"
+  api: 
+    container_name: "pharma_backend_prod"
+    image: "node:10.18.0"
+    # user: "node"
+    expose:
+      - 3000
+    networks:
+      - app-tier-prod
+    depends_on:
+      # - redis
+      - mariadb
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app
+      - /home/node/app/upload
+      - /home/node/app/upload/product
+    env_file:
+      - .env
+    ports:
+      - 34001:3000
+    command: bash -c "npm run start:prod"
   # redis:
-  #   container_name: pharma_redis
+  #   container_name: pharma_redis_prod
   #   image: 'bitnami/redis:latest'
   #   volumes:
-  #     - redis_data:/bitnami/redis/data
+  #     - redis_data_prod:/bitnami/redis/data
   #   env_file:
   #     - .env
   #   ports:
   #     - 6379:6379
   #   networks:
-  #     - app-tier
+  #     - app-tier-prod
   mariadb:
-    container_name: "pharma_db"
+    container_name: "pharma_db_prod"
     image: mariadb
     restart: always
     working_dir: /home/
     networks:
-      - app-tier
+      - app-tier-prod
     env_file:
       - .env
     environment:
@@ -55,15 +57,15 @@ services:
       - ./database:/home/
     ports:
       - 3306
-      - 3306:3306
+      - 3506:3306
     command: ['mysqld', '--character-set-server=utf8', '--collation-server=utf8_general_ci']
   adminer:
-    container_name: "pharma_db_adminer"
+    container_name: "pharma_db_adminer_prod"
     image: adminer
     networks:
-      - app-tier
+      - app-tier-prod
     depends_on:
       - mariadb
     restart: always
     ports:
-      - 8082:8080
+      - 8282:8080
